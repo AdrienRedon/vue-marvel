@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
       <h1>{{ hero.name }}</h1>
       <p>{{ hero.description }}</p>
       <img :src="url">
@@ -12,21 +12,14 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import store from '@/store'
+  import { mapGetters } from 'vuex'
 
   export default {
-    data () {
-      return {
-        hero: {
-          comics: {
-            items: []
-          },
-          thumbnail: {}
-        }
-      }
-    },
     computed: {
+      ...mapGetters(['getHeroById', 'loading']),
+      hero () {
+        return this.getHeroById(this.$route.params.id)
+      },
       url () {
         if (this.hero.thumbnail.path) {
           return `${this.hero.thumbnail.path}/standard_fantastic.${this.hero.thumbnail.extension}`
@@ -37,15 +30,6 @@
       comics () {
         return this.hero.comics.items.slice(0, 3)
       }
-    },
-    mounted () {
-      store.loading()
-      const characterId = this.$route.params.id
-      axios.get(`/characters/${characterId}`)
-        .then(res => {
-          this.hero = res.data
-          store.loaded()
-        })
     }
   }
 </script>

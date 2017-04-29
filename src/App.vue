@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <clip-loader v-if="store.loading" color="#509ED1" size="80px"></clip-loader>
-    <router-view v-show="!store.loading"></router-view>
+    <clip-loader v-if="loading" color="#509ED1" size="80px"></clip-loader>
+    <router-view v-show="!loading"></router-view>
   </div>
 </template>
 
 <script>
-  import store from '@/store'
+  import axios from 'axios'
+  import { mapGetters, mapActions } from 'vuex'
   import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
   export default {
@@ -14,10 +15,19 @@
     components: {
       ClipLoader
     },
-    data () {
-      return {
-        store: store.state
-      }
+    computed: {
+      ...mapGetters(['loading'])
+    },
+    methods: {
+      ...mapActions(['init', 'spinner_loading', 'spinner_loaded'])
+    },
+    created () {
+      this.spinner_loading()
+      axios.get('/characters')
+        .then(res => {
+          this.init(res.data)
+          this.spinner_loaded()
+        })
     }
   }
 </script>

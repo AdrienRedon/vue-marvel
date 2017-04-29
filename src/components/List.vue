@@ -6,29 +6,21 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import store from '@/store'
+  import { mapGetters, mapActions } from 'vuex'
   import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
   import HeroThumbnail from '@/components/HeroThumbnail'
 
   export default {
     name: 'list',
-    data () {
-      return {
-        heroes: []
-      }
+    computed: {
+      ...mapGetters(['heroes'])
     },
     components: {
       ClipLoader,
       HeroThumbnail
     },
-    mounted () {
-      store.loading()
-      axios.get('/characters')
-        .then(res => {
-          this.heroes = res.data
-          store.loaded()
-        })
+    methods: {
+      ...mapActions(['init', 'loaded', 'loading'])
     }
   }
 </script>
