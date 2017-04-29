@@ -13,6 +13,7 @@
 
 <script>
   import axios from 'axios'
+  import store from '@/store'
 
   export default {
     data () {
@@ -38,10 +39,12 @@
       }
     },
     mounted () {
+      store.loading()
       const characterId = this.$route.params.id
       axios.get(`/characters/${characterId}`)
         .then(res => {
           this.hero = res.data
+          store.loaded()
         })
     }
   }

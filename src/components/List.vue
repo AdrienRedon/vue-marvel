@@ -7,6 +7,8 @@
 
 <script>
   import axios from 'axios'
+  import store from '@/store'
+  import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
   import HeroThumbnail from '@/components/HeroThumbnail'
 
   export default {
@@ -17,11 +19,16 @@
       }
     },
     components: {
+      ClipLoader,
       HeroThumbnail
     },
     mounted () {
+      store.loading()
       axios.get('/characters')
-        .then(res => { this.heroes = res.data })
+        .then(res => {
+          this.heroes = res.data
+          store.loaded()
+        })
     }
   }
 </script>
