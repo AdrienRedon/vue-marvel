@@ -1,17 +1,18 @@
 <template>
-    <div v-if="!loading">
-      <router-link :to="{name: 'List'}">Retour</router-link>
-      <h1>{{ hero.name }}</h1>
-      <button :class="{bookmark: hero.bookmark}" @click="handlebookmark">Bookmark</button>
-      <router-link v-if="prevHero" :to="{name: 'Hero', params: {id: prevHero.id}}">{{ prevHero.name }}</router-link>
-      <router-link v-if="nextHero" :to="{name: 'Hero', params: {id: nextHero.id}}">{{ nextHero.name }}</router-link>
-      <p>{{ hero.description }}</p>
-      <img :src="url">
-      <p>Nombre de comics: {{ hero.comics.available }}</p>
-      <ul>
-        <li v-for="comic in comics">{{ comic.name }}</li>
-        <li v-if="hero.comics.available > 3">...</li>
-      </ul>
+    <div class="container" v-if="!loading">
+      <router-link :to="{name: 'List'}" class="back">Retour</router-link>
+      <h1>{{ hero.name }} <button class="bookmark" :class="{bookmarked: hero.bookmark}" @click="handlebookmark">Bookmark</button></h1>
+      <router-link v-if="prevHero" :to="{name: 'Hero', params: {id: prevHero.id}}" class="prevButton">{{ prevHero.name }}</router-link>
+      <router-link v-if="nextHero" :to="{name: 'Hero', params: {id: nextHero.id}}" class="nextButton">{{ nextHero.name }}</router-link>
+      <div class="description">
+        <p>{{ hero.description }}</p>
+        <img :src="url">
+        <p>Nombre de comics: {{ hero.comics.available }}</p>
+        <ul>
+          <li v-for="comic in comics">{{ comic.name }}</li>
+          <li v-if="hero.comics.available > 3">...</li>
+        </ul>
+      </div>
     </div>
 </template>
 
@@ -56,7 +57,51 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .bookmark {
-      background-color: #BADA55;
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "back ."
+                         "name name"
+                         "prev next"
+                         "desc desc";
+  }
+  @media screen and (min-width: 1000px) {
+    .container {
+      display: grid;
+      grid-template-columns: 100px 50px 1fr 50px 100px;
+      grid-template-rows: 50px 50px 1fr;
+      grid-row-align: center;
+      grid-template-areas: "back . . . ."
+                           "prev . name . next"
+                           "prev desc desc desc next";
     }
+  }
+  .back {
+    grid-area: back;
+  }
+  .bookmark {
+    font-size: 1rem;
+  }
+  .bookmarked {
+    background-color: #BADA55;
+  }
+  .prevButton {
+    grid-area: prev;
+    align-content: center;
+  }
+  .nextButton {
+    grid-area: next;
+    align-content: center;
+  }
+  h1 {
+    text-align: center;
+    grid-area: name;
+  }
+  .description {
+    grid-area: desc;
+  }
+  img {
+    width: 100%;
+  }
 </style>

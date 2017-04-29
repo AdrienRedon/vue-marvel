@@ -1,7 +1,7 @@
 <template>
   <div>
     <img :src="url">
-    <router-link :to="{name: 'Hero', params: {id: hero.id}}">{{ hero.name }}</router-link>
+    <router-link :to="{name: 'Hero', params: {id: hero.id}}" :class="{bookmarked: hero.bookmark}">{{ hero.name }}</router-link>
   </div>
 </template>
 
@@ -18,5 +18,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  .bookmarked {
+    color: #BADA55;
+  }
 </style>

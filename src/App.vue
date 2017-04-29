@@ -34,5 +34,12 @@
 
 <!-- Global style -->
 <style>
-
+  body, html {
+    box-sizing: border-box;
+  }
+  *, *:after, *:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
 </style>
