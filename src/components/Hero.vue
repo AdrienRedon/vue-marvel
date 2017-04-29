@@ -1,5 +1,6 @@
 <template>
     <div v-if="!loading">
+      <router-link :to="{name: 'List'}">Retour</router-link>
       <h1>{{ hero.name }}</h1>
       <button :class="{bookmark: hero.bookmark}" @click="handlebookmark">Bookmark</button>
       <router-link v-if="prevHero" :to="{name: 'Hero', params: {id: prevHero.id}}">{{ prevHero.name }}</router-link>
