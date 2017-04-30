@@ -19,15 +19,4 @@ app.get('/characters', (req, res) => {
     .catch(error => res.send(error));
 });
 
-app.get('/characters/:id', (req, res) => {
-  marvel.characters.find(req.id)
-    .then(character => res.send(character.data[0]))
-    .catch(error => res.send(error));
-});
-
-app.param('id', (req, res, next, id) => {
-    req.id = id;
-    next();
-});
-
 server.listen(1337, () => console.log('Magic happens on port 1337'));
