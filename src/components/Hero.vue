@@ -26,10 +26,10 @@
         return this.getHeroById(this.$route.params.id)
       },
       prevHero () {
-        return this.getPrevHeroById(this.$route.params.id)
+        return this.getPrevHeroById(this.hero.id)
       },
       nextHero () {
-        return this.getNextHeroById(this.$route.params.id)
+        return this.getNextHeroById(this.hero.id)
       },
       url () {
         if (this.hero.thumbnail.path) {
