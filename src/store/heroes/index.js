@@ -12,7 +12,7 @@ const mutations = {
   HEROES_BOOKMARK (state, heroBookmarked) {
     if (state.nbBookmarked < 5) {
       state.heroes = state.heroes.map(hero => {
-        if (hero.id === heroBookmarked.id) {
+        if (hero.id === heroBookmarked.id && !hero.bookmark) {
           state.nbBookmarked++
           return { ...hero, bookmark: true }
         } else {
@@ -24,14 +24,14 @@ const mutations = {
   /* Unbookmark a hero */
   HEROES_UNBOOKMARK (state, heroBookmarked) {
     state.heroes = state.heroes.map(hero => {
-      if (hero.id === heroBookmarked.id) {
+      if (hero.id === heroBookmarked.id && hero.bookmark) {
         delete hero.bookmark
+        state.nbBookmarked--
         return hero
       } else {
         return hero
       }
     })
-    state.nbBookmarked--
   }
 }
 
