@@ -21,6 +21,7 @@ const actions = {
 }
 
 const getters = {
+  /* Get the state of the spinner */
   loading (state, getters, rootState) {
     return state.loading
   }

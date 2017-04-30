@@ -4,21 +4,24 @@ const state = {
 }
 
 const mutations = {
+  /* Init list of heroes */
   HEROES_INIT (state, heroes) {
     state.heroes = heroes
   },
+  /* Bookmark a hero */
   HEROES_BOOKMARK (state, heroBookmarked) {
     if (state.nbBookmarked < 5) {
       state.heroes = state.heroes.map(hero => {
         if (hero.id === heroBookmarked.id) {
+          state.nbBookmarked++
           return { ...hero, bookmark: true }
         } else {
           return hero
         }
       })
-      state.nbBookmarked++
     }
   },
+  /* Unbookmark a hero */
   HEROES_UNBOOKMARK (state, heroBookmarked) {
     state.heroes = state.heroes.map(hero => {
       if (hero.id === heroBookmarked.id) {
@@ -45,15 +48,19 @@ const actions = {
 }
 
 const getters = {
+  /* Get all the heroes */
   heroes (state, getters, rootState) {
     return state.heroes
   },
+  /* Get the hero in the list by the given id */
   getHeroById: (state, getters, rootState) => (id) => {
     return state.heroes.find(hero => hero.id === parseInt(id))
   },
+  /* Get the previous hero in the list by the given id of the selected hero */
   getPrevHeroById: (state, getters, rootState) => (id) => {
     return state.heroes[state.heroes.indexOf(getters.getHeroById(id)) - 1]
   },
+  /* Get the next hero in the list by the given id of the selected hero */
   getNextHeroById: (state, getters, rootState) => (id) => {
     return state.heroes[state.heroes.indexOf(getters.getHeroById(id)) + 1]
   }

@@ -6,6 +6,7 @@ const config = require('./marvel-key');
 let app = express();
 const server = http.createServer(app);
 
+/* Serve static files */
 app.use('/static', express.static('dist/static'));
 app.get('/', (req, res) => {
   res.sendFile( __dirname + '/dist/index.html');
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 
 const marvel = api.createClient(config);
 
+/* Fetch 20 marvel characters starting at 100 */
 app.get('/characters', (req, res) => {
   marvel.characters.findAll(20, 100)
     .then(characters => res.send(characters.data))

@@ -23,6 +23,7 @@
     },
     created () {
       this.spinner_loading()
+      /* Fetch list of characters and initialize the store with the data */
       axios.get('/characters')
         .then(res => {
           this.init(res.data)
