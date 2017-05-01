@@ -93,6 +93,7 @@
   .nextButton {
     grid-area: next;
     align-content: center;
+    text-align: right;
   }
   h1 {
     text-align: center;

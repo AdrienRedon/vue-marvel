@@ -29,6 +29,10 @@
           this.init(res.data)
           this.spinner_loaded()
         })
+        .catch(error => {
+          console.log(error)
+          this.spinner_loaded()
+        })
     }
   }
 </script>
